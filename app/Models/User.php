@@ -54,6 +54,10 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    protected function profilePhotoDisk(): string
+    {
+        return 'gcs';
+    }
     /**
      * Get the attributes that should be cast.
      *
