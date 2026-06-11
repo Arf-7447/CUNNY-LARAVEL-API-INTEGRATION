@@ -30,6 +30,15 @@ return [
 
     'disks' => [
 
+        'gcs' => [
+            'driver' => 'gcs',
+            'project_id' => env('GOOGLE_CLOUD_PROJECT_ID'),
+            'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET'),
+            'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', ''),
+            'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null),
+            'visibility' => 'public',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
@@ -77,12 +86,5 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
-    'gcs' => [
-        'driver' => 'gcs',
-        'project_id' => env('GOOGLE_CLOUD_PROJECT_ID'),
-        'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET'),
-        'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', ''),
-        'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null),
-        'visibility' => 'public',
-    ],
+
 ];
