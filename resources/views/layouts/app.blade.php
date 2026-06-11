@@ -7,6 +7,8 @@
 
         <title>{{ $title ?? config('app.name') }}</title>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <link rel="icon" href="{{ asset('images/cunny.png') }}" type="image/x-icon">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
