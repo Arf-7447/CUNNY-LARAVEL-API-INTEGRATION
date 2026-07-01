@@ -59,14 +59,14 @@
                                        flex flex-col justify-center items-center"
                             >
 
-                                {{-- Preview Image --}}
+                                <!-- Preview -->
                                 <img
                                     id="preview"
-                                    class="hidden max-w-xs max-h-32 object-contain rounded-lg shadow mb-3"
+                                    class="hidden max-w-xs max-h-40 object-contain rounded-lg shadow mb-3"
                                     alt="Preview Image"
                                 >
 
-                                {{-- Upload Icon --}}
+                                <!-- Upload Icon -->
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="w-10 h-10 md:w-12 md:h-12 text-gray-400 mb-2"
@@ -87,29 +87,51 @@
                                 </h3>
 
                                 <p class="text-sm text-gray-500 dark:text-gray-300 text-center">
-                                    JPG, JPEG, PNG
+                                    JPG, JPEG, PNG (Maximum 10 MB)
                                 </p>
 
+                                <!-- Input Upload -->
                                 <input
-                                type="file"
-                                id="image"
-                                name="image"
-                                accept=".jpg,.jpeg,.png,image/jpeg,image/png"
-                                class="hidden"
-                                required
+                                    type="file"
+                                    id="image"
+                                    name="image"
+                                    accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+                                    class="hidden"
+                                    required
                                 >
 
-                                <button
-                                    type="button"
-                                    id="browseBtn"
-                                    class="mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition"
+                                <!-- Input Camera -->
+                                <input
+                                    type="file"
+                                    id="cameraImage"
+                                    accept="image/*"
+                                    capture="environment"
+                                    class="hidden"
                                 >
-                                    Browse Image
-                                </button>
+
+                                <div class="flex flex-wrap justify-center gap-3 mt-4">
+
+                                    <button
+                                        type="button"
+                                        id="browseBtn"
+                                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
+                                    >
+                                        Browse Image
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        id="cameraBtn"
+                                        class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition"
+                                    >
+                                        📷 Open Camera
+                                    </button>
+
+                                </div>
 
                                 <p
                                     id="fileName"
-                                    class="mt-2 text-xs text-gray-600 dark:text-gray-300 text-center break-all"
+                                    class="mt-3 text-xs text-gray-600 dark:text-gray-300 break-all text-center"
                                 ></p>
 
                             </div>
@@ -140,8 +162,13 @@
     <script>
 
         const dropZone = document.getElementById('drop-zone');
+
         const imageInput = document.getElementById('image');
+        const cameraInput = document.getElementById('cameraImage');
+
         const browseBtn = document.getElementById('browseBtn');
+        const cameraBtn = document.getElementById('cameraBtn');
+
         const fileName = document.getElementById('fileName');
         const preview = document.getElementById('preview');
 
@@ -151,15 +178,34 @@
             'image/png'
         ];
 
-        const maxSize = 10 * 1024 * 1024; // 10 MB
+        const maxSize = 10 * 1024 * 1024;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Browse Button
+        |--------------------------------------------------------------------------
+        */
 
         browseBtn.addEventListener('click', () => {
             imageInput.click();
         });
 
-        /**
-         * Validate uploaded image
-         */
+        /*
+        |--------------------------------------------------------------------------
+        | Camera Button
+        |--------------------------------------------------------------------------
+        */
+
+        cameraBtn.addEventListener('click', () => {
+            cameraInput.click();
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate Image
+        |--------------------------------------------------------------------------
+        */
+
         function validateImage(file)
         {
             if (!allowedTypes.includes(file.type)) {
@@ -179,9 +225,12 @@
             return true;
         }
 
-        /**
-         * Show image preview
-         */
+        /*
+        |--------------------------------------------------------------------------
+        | Show Preview
+        |--------------------------------------------------------------------------
+        */
+
         function showPreview(file)
         {
             if (!file) return;
@@ -191,12 +240,16 @@
             const imageUrl = URL.createObjectURL(file);
 
             preview.src = imageUrl;
+
             preview.classList.remove('hidden');
         }
 
-        /**
-         * File selected from browse button
-         */
+        /*
+        |--------------------------------------------------------------------------
+        | Browse Upload
+        |--------------------------------------------------------------------------
+        */
+
         imageInput.addEventListener('change', () => {
 
             if (!imageInput.files.length) {
@@ -208,7 +261,9 @@
                 alert('Only one image can be uploaded.');
 
                 imageInput.value = '';
+
                 fileName.textContent = '';
+
                 preview.classList.add('hidden');
 
                 return;
@@ -219,7 +274,9 @@
             if (!validateImage(file)) {
 
                 imageInput.value = '';
+
                 fileName.textContent = '';
+
                 preview.classList.add('hidden');
 
                 return;
@@ -229,9 +286,44 @@
 
         });
 
-        /**
-         * Drag over
-         */
+        /*
+        |--------------------------------------------------------------------------
+        | Camera Upload
+        |--------------------------------------------------------------------------
+        */
+
+        cameraInput.addEventListener('change', () => {
+
+            if (!cameraInput.files.length) {
+                return;
+            }
+
+            const file = cameraInput.files[0];
+
+            if (!validateImage(file)) {
+
+                cameraInput.value = '';
+
+                return;
+            }
+
+            // Copy image camera ke input utama
+            const dataTransfer = new DataTransfer();
+
+            dataTransfer.items.add(file);
+
+            imageInput.files = dataTransfer.files;
+
+            showPreview(file);
+
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Drag Over
+        |--------------------------------------------------------------------------
+        */
+
         dropZone.addEventListener('dragover', (e) => {
 
             e.preventDefault();
@@ -243,9 +335,12 @@
 
         });
 
-        /**
-         * Drag leave
-         */
+        /*
+        |--------------------------------------------------------------------------
+        | Drag Leave
+        |--------------------------------------------------------------------------
+        */
+
         dropZone.addEventListener('dragleave', () => {
 
             dropZone.classList.remove(
@@ -255,9 +350,12 @@
 
         });
 
-        /**
-         * Drop file
-         */
+        /*
+        |--------------------------------------------------------------------------
+        | Drop File
+        |--------------------------------------------------------------------------
+        */
+
         dropZone.addEventListener('drop', (e) => {
 
             e.preventDefault();
@@ -273,9 +371,6 @@
                 return;
             }
 
-            /**
-             * Prevent multiple image uploads
-             */
             if (files.length > 1) {
 
                 alert('Please upload only one image.');
@@ -289,9 +384,6 @@
                 return;
             }
 
-            /**
-             * Assign dropped file
-             */
             const dataTransfer = new DataTransfer();
 
             dataTransfer.items.add(file);
@@ -302,17 +394,23 @@
 
         });
 
-        /**
-         * Click drop zone
-         */
+        /*
+        |--------------------------------------------------------------------------
+        | Click Drop Zone
+        |--------------------------------------------------------------------------
+        */
+
         dropZone.addEventListener('click', (e) => {
 
-            if (e.target !== browseBtn) {
+            if (
+                e.target !== browseBtn &&
+                e.target !== cameraBtn
+            ) {
                 imageInput.click();
             }
 
         });
 
-    </script>
+        </script>
 
 </x-app-layout>
