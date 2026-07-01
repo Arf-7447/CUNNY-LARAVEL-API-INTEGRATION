@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -71,4 +72,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected function profilePhotoUrl(): Attribute
+{
+    return Attribute::get(function () {
+
+        if (!$this->profile_photo_path) {
+            return 'https://ui-avatars.com/api/?name=' . urlencode($this->name);
+        }
+
+        return sprintf(
+            'https://storage.googleapis.com/%s/%s',
+            config('filesystems.disks.gcs.bucket'),
+            $this->profile_photo_path
+        );
+    });
+}
 }

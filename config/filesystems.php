@@ -32,11 +32,12 @@ return [
 
         'gcs' => [
             'driver' => 'gcs',
-            'project_id' => env('GOOGLE_CLOUD_PROJECT_ID'),
-            'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET'),
-            'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', ''),
-            'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null),
-            'visibility' => 'public',
+                    'project_id' => env('GOOGLE_CLOUD_PROJECT'),
+                    'key_file_path' => env('GOOGLE_APPLICATION_CREDENTIALS'),
+                    'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET'),
+                    'url' => 'https://storage.googleapis.com/'.env('GOOGLE_CLOUD_STORAGE_BUCKET'),
+                    'path_prefix' => null,
+                    'storage_api_uri' => null,
         ],
 
         'local' => [
