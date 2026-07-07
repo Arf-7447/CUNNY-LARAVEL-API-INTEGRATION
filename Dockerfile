@@ -31,6 +31,8 @@ COPY . .
 
 COPY --from=nodebuilder /app/public/build public/build
 
+COPY php.ini /usr/local/etc/php/conf.d/uploads.ini
+
 RUN composer install --no-dev --optimize-autoloader
 
 RUN chmod -R 775 storage bootstrap/cache
