@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PredictController;
-use Illuminate\Support\Facades\Storage;
-use Google\Cloud\Storage\StorageClient;
+// use Illuminate\Support\Facades\Storage;
+// use Google\Cloud\Storage\StorageClient;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,12 +27,4 @@ Route::post('/img-classify', [PredictController::class, 'predict'
 
 Route::get('/img-classify/result', [PredictController::class, 'result'
     ])->name('img-classify.result');
-});
-Route::get('/phpinfo-upload', function () {
-    return [
-        'upload_max_filesize' => ini_get('upload_max_filesize'),
-        'post_max_size' => ini_get('post_max_size'),
-        'memory_limit' => ini_get('memory_limit'),
-        'max_file_uploads' => ini_get('max_file_uploads'),
-    ];
 });
