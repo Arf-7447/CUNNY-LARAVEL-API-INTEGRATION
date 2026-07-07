@@ -274,7 +274,7 @@ Build a new image.
 
 ```bash
 gcloud builds submit \
---tag your-region-deploy-docker.pkg.dev/PROJECT_ID/your-repo-name/backend:latest
+--tag your-region-deploy-docker.pkg.dev/PROJECT_ID/your-repo-name/backend:latest .
 ```
 
 Deploy the latest image.
