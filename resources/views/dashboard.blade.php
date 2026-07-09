@@ -43,7 +43,7 @@
                             <p class="text-justify">
                                 Saat ini sedang mengerjakan proyek tugas akhir berjudul
                                 <strong>
-                                    "Pemanfaatan Google Cloud Computing untuk Pengembangan API
+                                    "Pemanfaatan Google Cloud Platfrom untuk Pengembangan API
                                     Model Machine Learning pada Platform Edukasi CUNNY"
                                 </strong>.
                             </p>
