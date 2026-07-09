@@ -23,7 +23,7 @@
                     <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 h-full">
 
                         <img
-                            src="{{ asset('images/arif-1-1.jpg') }}"
+                            src="{{ asset('images/happy-cat.gif') }}"
                             alt="Arif Pandu Hidayatulloh"
                             class="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 mx-auto rounded-full object-cover border-2 border-white shadow-lg mb-3">
 
